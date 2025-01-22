@@ -12,6 +12,7 @@ const jsCloseBtn = document.getElementById("js-close");
 const submitBtn = document.getElementsByName("submit");
 // The form for adding todos
 const todoForm = document.getElementById("todoForm");
+
 // List of todos
 const todos = [];
 
@@ -78,7 +79,7 @@ function displayTodo() {
         let todoElement = document.createElement('div');
         todoElement.id = "todo";
         todoElement.innerHTML = `
-        <div class="thumbtack"></div> <!-- Thumbtack created with CSS -->
+        <div class="thumbtack" id="thumbtack"></div> <!-- Thumbtack created with CSS -->
         <h2>${todo.title}</h2>
         <div class="todo-item"><strong>Description:</strong>&nbsp;${todo.description}</div>
         <div class="todo-item"><strong>Due Date:</strong>&nbsp;${todo.dueDate}</div>
