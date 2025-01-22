@@ -60,6 +60,7 @@ console.log(greeting);
 function addTodo (title, description, dueDate, priority, note) {
     const newTodo = new Todo(title, description, dueDate, priority, note)
     todos.push(newTodo);
+    displayTodo()
 }
 
 function Todo (title, description, dueDate, priority, note) {
@@ -68,6 +69,24 @@ function Todo (title, description, dueDate, priority, note) {
     this.dueDate = dueDate;
     this.priority = priority;
     this.note = note;
+}
+
+function displayTodo() {
+    let todoList = document.getElementById("todo-list");
+    todoList.innerHTML = "";
+    todos.forEach((todo, index) => {
+        let todoElement = document.createElement('div');
+        todoElement.id = "todo";
+        todoElement.innerHTML = `
+        <div class="thumbtack"></div> <!-- Thumbtack created with CSS -->
+        <h2>${todo.title}</h2>
+        <div class="todo-item"><strong>Description:</strong>&nbsp;${todo.description}</div>
+        <div class="todo-item"><strong>Due Date:</strong>&nbsp;${todo.dueDate}</div>
+        <div class="todo-item priority"><strong>Priority:</strong>&nbsp;${todo.priority}</div>
+        <div class="todo-item notes"><strong>Notes:</strong>&nbsp;${todo.note}</div>
+        `;
+        todoList.appendChild(todoElement);
+    });
 }
 
 console.log(todos);
