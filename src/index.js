@@ -13,9 +13,30 @@ const submitBtn = document.getElementsByName("submit");
 // The form for adding todos
 const todoForm = document.getElementById("todoForm");
 
-// List of todos
-const todos = [];
+const hamburger = document.querySelector('.hamburger');
+const sidebar = document.querySelector('.sidebar');
+const container = document.querySelector('.container');
 
+// List of todos in default project
+const defaultProj = [];
+
+
+// Event listener for the hamburger menu
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    sidebar.classList.toggle('active');
+    container.classList.toggle('active');
+});
+
+
+// Close menu when clicking on a link
+document.querySelectorAll('.sidebar a').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        sidebar.classList.remove('active');
+        container.classList.remove('active');
+    });
+});
 
 // Event listener for showing dialog
 showBtn.addEventListener("click", () => {
@@ -60,7 +81,7 @@ console.log(greeting);
 
 function addTodo (title, description, dueDate, priority, note) {
     const newTodo = new Todo(title, description, dueDate, priority, note)
-    todos.push(newTodo);
+    defaultProj.push(newTodo);
     displayTodo()
 }
 
@@ -75,7 +96,7 @@ function Todo (title, description, dueDate, priority, note) {
 function displayTodo() {
     let todoList = document.getElementById("todo-list");
     todoList.innerHTML = "";
-    todos.forEach((todo, index) => {
+    defaultProj.forEach((todo, index) => {
         let todoElement = document.createElement('div');
         todoElement.id = "todo";
         todoElement.innerHTML = `
@@ -90,5 +111,5 @@ function displayTodo() {
     });
 }
 
-console.log(todos);
+console.log(defaultProj);
 
