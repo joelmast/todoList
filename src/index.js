@@ -12,14 +12,29 @@ const jsCloseBtn = document.getElementById("js-close");
 const submitBtn = document.getElementsByName("submit");
 // The form for adding todos
 const todoForm = document.getElementById("todoForm");
+// Create new project button
+const createProjectBtn = document.getElementById("create-project");
 
 const hamburger = document.querySelector('.hamburger');
 const sidebar = document.querySelector('.sidebar');
 const container = document.querySelector('.container');
 
 // List of todos in default project
-const defaultProj = [];
+// const defaultProj = [];
+// object of project lists
+let projects = {
+    defaultProj: []
+}
 
+// Event listener for the Create project button
+createProjectBtn.addEventListener("click", () => {
+    const projectName = prompt("Enter project name:");
+    if (projectName) {
+        projects[projectName] = [];
+        alert(`Project "${projectName}" created successfully.`);
+    }
+    console.log(projects[defaultProj]);
+});
 
 // Event listener for the hamburger menu
 hamburger.addEventListener('click', () => {
@@ -81,8 +96,9 @@ console.log(greeting);
 
 function addTodo (title, description, dueDate, priority, note) {
     const newTodo = new Todo(title, description, dueDate, priority, note)
-    defaultProj.push(newTodo);
+    projects.defaultProj.push(newTodo);
     displayTodo()
+    console.log(projects.defaultProj);
 }
 
 function Todo (title, description, dueDate, priority, note) {
@@ -96,7 +112,7 @@ function Todo (title, description, dueDate, priority, note) {
 function displayTodo() {
     let todoList = document.getElementById("todo-list");
     todoList.innerHTML = "";
-    defaultProj.forEach((todo, index) => {
+    projects.defaultProj.forEach((todo, index) => {
         let todoElement = document.createElement('div');
         todoElement.id = "todo";
         todoElement.innerHTML = `
@@ -111,5 +127,5 @@ function displayTodo() {
     });
 }
 
-console.log(defaultProj);
+console.log(projects.defaultProj);
 

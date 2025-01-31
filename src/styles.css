@@ -27,6 +27,8 @@ body {
 
 
 #todo {
+    margin-right: 10px;
+    margin-left: 10px;
     margin: 5px;
     margin-top: 10px;;
     width: 400px;
@@ -173,4 +175,64 @@ h2 {
     position: fixed;
    margin-top: 50vh;
    margin-left: 30vw; 
+}
+
+/* a media query for mobile users which makes the sidebar farther over off of the screen */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -30vw;
+    }
+}
+
+.welcome {
+    font-size: 7vh;
+}
+
+/* Todo button styling */
+
+#show-dialog {
+  /* Base Styling */
+  padding: 1.2rem 2.5rem;
+  font-size: 1.4rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  
+  /* Color Scheme */
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  /* Hover Effects */
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+  }
+  
+  /* Click Animation */
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Subtle Continuous Pulse */
+  animation: gentlePulse 2s infinite;
+}
+
+@keyframes gentlePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* styling for create project button */
+#create-project {
+    padding: .5vh;
+    font-size: 1.4rem;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
 }
