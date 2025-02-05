@@ -1,3 +1,10 @@
+// Todo:
+// Switch to using numbers for currentProject instead of the name. probably with data index.
+
+
+
+
+
 // index.js
 import "./styles.css";
 import { greeting } from "./greeting.js";
@@ -18,6 +25,8 @@ const projectList = document.getElementById("project-list");
 const createProjectBtn = document.getElementById("create-project");
 // project item class
 const projectItems = document.querySelectorAll('.project-item');
+// project class link
+const projectLinks = document.querySelectorAll('.project-link');
 console.log(projectItems + "yoooo")
 
 const hamburger = document.querySelector('.hamburger');
@@ -25,8 +34,7 @@ const sidebar = document.querySelector('.sidebar');
 const container = document.querySelector('.container');
 // curent project variable
 let currentProject = 0;
-// List of todos in default project
-// const defaultProj = [];
+
 // object of project lists
 let projects = [
     { name: "defaultProj", todos: [] }
@@ -52,18 +60,36 @@ hamburger.addEventListener('click', () => {
     container.classList.toggle('active');
 });
 
-// event listener for the all the projectItems with .foreach
-projectItems.addEventListener('click', (event) => {
-    console.log("I was here!!")
-    console.log(event.target)
-    if (event.target.classList.contains('project-item')) {
-        currentProject = e.target.id;
-        console.log("I was here!!")
-        console.log(currentProject);
+
+// // Event listener for the project items with .forEach
+// function projectFunction() {
+//     projectLinks.forEach(link => {
+//         link.addEventListener('click', (event) => {
+//             console.log("I'm here!!!")
+//             // get id atribute of parent li element and assign to current project
+//             let parentElement = link.parentElement;
+//             console.log(parentElement.id);
+
+//             console.log("I was hereefefe!!")
+//             console.log(currentProject);
+//             displayTodo();
+//         });
+//     });
+// }
+// projectFunction();
+
+projectList.addEventListener('click', (event) => {
+    // Check if the clicked element has the class "project-link"
+    if (event.target && event.target.classList.contains('project-link')) {
+        console.log("I'm here!!!")
+        // Get the parent <li> id which is the project name
+        let selectedProject = event.target.parentElement.id;
+        currentProject = selectedProject;
+        console.log("Selected project:", selectedProject);
+        // Call displayTodo() or any other function that should run when a project is selected
         displayTodo();
     }
 });
-
 
 // Close menu when clicking on a link
 document.querySelectorAll('.sidebar a').forEach(link => {
@@ -130,7 +156,7 @@ function displayProject() {
         projectElement.id = project.name;
         projectElement.classList.add('project-item');
         projectElement.innerHTML = `
-        <a href="#">${project.name}</a>
+        <a class="project-link" href="#">${project.name}</a>
         `;
         projectList.appendChild(projectElement);
     });
