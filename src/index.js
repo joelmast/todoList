@@ -27,7 +27,6 @@ const createProjectBtn = document.getElementById("create-project");
 const projectItems = document.querySelectorAll('.project-item');
 // project class link
 const projectLinks = document.querySelectorAll('.project-link');
-console.log(projectItems + "yoooo")
 
 const hamburger = document.querySelector('.hamburger');
 const sidebar = document.querySelector('.sidebar');
@@ -39,7 +38,6 @@ let currentProject = 0;
 let projects = [
     { name: "defaultProj", todos: [] }
 ];
-console.log(projects);
 
 // Event listener for the Create project button
 createProjectBtn.addEventListener("click", () => {
@@ -82,9 +80,11 @@ projectList.addEventListener('click', (event) => {
     // Check if the clicked element has the class "project-link"
     if (event.target && event.target.classList.contains('project-link')) {
         console.log("I'm here!!!")
-        // Get the parent <li> id which is the project name
-        let selectedProject = event.target.parentElement.id;
+        // Get the data-id which is the project index in the projects array
+        let selectedProject = parseInt(event.target.getAttribute('data-id'));
+        // subtract 1 from the selected project index to get the correct project index in the projects array
         currentProject = selectedProject;
+        // 
         console.log("Selected project:", selectedProject);
         // Call displayTodo() or any other function that should run when a project is selected
         displayTodo();
@@ -138,9 +138,6 @@ todoForm.addEventListener("submit", (e) => {
 
 })
 
-
-console.log(greeting);
-
 function addTodo (title, description, dueDate, priority, note) {
     const newTodo = new Todo(title, description, dueDate, priority, note)
     projects[currentProject].todos.push(newTodo);
@@ -152,11 +149,12 @@ function addTodo (title, description, dueDate, priority, note) {
 function displayProject() {
     projectList.innerHTML = "";
     projects.forEach((project, index) => {
+        console.log("This is the index!!", index);
         let projectElement = document.createElement('li');
         projectElement.id = project.name;
         projectElement.classList.add('project-item');
         projectElement.innerHTML = `
-        <a class="project-link" href="#">${project.name}</a>
+        <a data-id="${index}" class="project-link" href="#">${project.name}</a>
         `;
         projectList.appendChild(projectElement);
     });
