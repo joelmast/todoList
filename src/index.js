@@ -1,14 +1,11 @@
-// Todo:
-// Switch to using numbers for currentProject instead of the name. probably with data index.
-
-
-
-
-
 // index.js
 import "./styles.css";
 import { greeting } from "./greeting.js";
-
+import { format, parseISO, isToday, isPast, differenceInDays } from "date-fns";
+// todolist element
+let todoList = document.getElementById("todo-list");
+// todo element
+const todo = document.getElementById("todo");
 // add todo button
 const showBtn = document.getElementById("show-dialog");
 // The dialog for adding todos
@@ -27,6 +24,9 @@ const createProjectBtn = document.getElementById("create-project");
 const projectItems = document.querySelectorAll('.project-item');
 // project class link
 const projectLinks = document.querySelectorAll('.project-link');
+// .delete-btn
+// const deleteBtn = document.querySelector('.delete-btn');
+
 
 const hamburger = document.querySelector('.hamburger');
 const sidebar = document.querySelector('.sidebar');
@@ -38,6 +38,16 @@ let currentProject = 0;
 let projects = [
     { name: "defaultProj", todos: [] }
 ];
+
+// Event listener for deleteBtn
+todoList.addEventListener("click", (event) => {
+    const target = event.target;
+    if (target.classList.contains('delete-btn')) {
+        const index = parseInt(target.getAttribute('data-index'));
+        projects[currentProject].todos.splice(index, 1);
+        displayTodo();
+    }
+});
 
 // Event listener for the Create project button
 createProjectBtn.addEventListener("click", () => {
@@ -58,23 +68,6 @@ hamburger.addEventListener('click', () => {
     container.classList.toggle('active');
 });
 
-
-// // Event listener for the project items with .forEach
-// function projectFunction() {
-//     projectLinks.forEach(link => {
-//         link.addEventListener('click', (event) => {
-//             console.log("I'm here!!!")
-//             // get id atribute of parent li element and assign to current project
-//             let parentElement = link.parentElement;
-//             console.log(parentElement.id);
-
-//             console.log("I was hereefefe!!")
-//             console.log(currentProject);
-//             displayTodo();
-//         });
-//     });
-// }
-// projectFunction();
 
 projectList.addEventListener('click', (event) => {
     // Check if the clicked element has the class "project-link"
@@ -169,18 +162,20 @@ function Todo (title, description, dueDate, priority, note) {
 }
 
 function displayTodo() {
-    let todoList = document.getElementById("todo-list");
+
     todoList.innerHTML = "";
     projects[currentProject].todos.forEach((todo, index) => {
         let todoElement = document.createElement('div');
+        console.log("Yoo da index is:", index)
         todoElement.id = "todo";
         todoElement.innerHTML = `
         <div class="thumbtack" id="thumbtack"></div> <!-- Thumbtack created with CSS -->
         <h2>${todo.title}</h2>
         <div class="todo-item"><strong>Description:</strong>&nbsp;${todo.description}</div>
-        <div class="todo-item"><strong>Due Date:</strong>&nbsp;${todo.dueDate}</div>
+        <div class="todo-item"><strong>Due Date:&nbsp;${differenceInDays(new Date(todo.dueDate), new Date())}</strong> days left</div>
         <div class="todo-item priority"><strong>Priority:</strong>&nbsp;${todo.priority}</div>
         <div class="todo-item notes"><strong>Notes:</strong>&nbsp;${todo.note}</div>
+        <button class="delete-btn" data-index="${index}">Delete</button>
         `;
         todoList.appendChild(todoElement);
     });
