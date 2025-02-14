@@ -39,12 +39,32 @@ let projects = [
     { name: "defaultProj", todos: [] }
 ];
 
+document.addEventListener('DOMContentLoaded', () => {
+    loadFromLocalStorage();
+    displayProject(); // If you have this function
+    displayTodo();   // If you have this function
+});
+
+function loadFromLocalStorage() {
+    const savedProjects = localStorage.getItem("todoProjects");
+    if (savedProjects) {
+        projects = JSON.parse(savedProjects);
+    }
+}
+loadFromLocalStorage();
+
+function saveToLocalStorage() {
+    localStorage.setItem("todoProjects", JSON.stringify(projects));
+}
+saveToLocalStorage();
+
 // Event listener for deleteBtn
 todoList.addEventListener("click", (event) => {
     const target = event.target;
     if (target.classList.contains('delete-btn')) {
         const index = parseInt(target.getAttribute('data-index'));
         projects[currentProject].todos.splice(index, 1);
+        saveToLocalStorage();
         displayTodo();
     }
 });
@@ -54,8 +74,9 @@ createProjectBtn.addEventListener("click", () => {
     const projectName = prompt("Enter project name:");
     if (projectName) {
         projects.push({ name: projectName, todos: [] });
-        alert(`Project "${projectName}" created successfully.`);
+        console.log(`Project "${projectName}" created successfully.`);
         // function call to display project list
+        saveToLocalStorage();
         displayProject();
     }
     console.log(projects);
@@ -134,6 +155,7 @@ todoForm.addEventListener("submit", (e) => {
 function addTodo (title, description, dueDate, priority, note) {
     const newTodo = new Todo(title, description, dueDate, priority, note)
     projects[currentProject].todos.push(newTodo);
+    saveToLocalStorage();
     displayTodo()
     console.log(projects[currentProject]);
 }
