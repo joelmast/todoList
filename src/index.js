@@ -28,6 +28,7 @@ const projectLinks = document.querySelectorAll('.project-link');
 // const deleteBtn = document.querySelector('.delete-btn');
 
 
+
 const hamburger = document.querySelector('.hamburger');
 const sidebar = document.querySelector('.sidebar');
 const container = document.querySelector('.container');
@@ -42,7 +43,8 @@ let projects = [
 document.addEventListener('DOMContentLoaded', () => {
     loadFromLocalStorage();
     displayProject(); // If you have this function
-    displayTodo();   // If you have this function
+    displayTodo();
+    dragElement(todo);   // If you have this function
 });
 
 function loadFromLocalStorage() {
@@ -189,6 +191,7 @@ function displayTodo() {
     projects[currentProject].todos.forEach((todo, index) => {
         let todoElement = document.createElement('div');
         console.log("Yoo da index is:", index)
+        todoElement.className = "todo-card";
         todoElement.id = "todo";
         todoElement.innerHTML = `
         <div class="thumbtack" id="thumbtack"></div> <!-- Thumbtack created with CSS -->
@@ -200,6 +203,9 @@ function displayTodo() {
         <button class="delete-btn" data-index="${index}">Delete</button>
         `;
         todoList.appendChild(todoElement);
+
+        const pin = todoElement.querySelector('.thumbtack');
+        
     });
 }
 
