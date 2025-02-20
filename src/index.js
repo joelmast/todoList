@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadFromLocalStorage();
     displayProject(); // If you have this function
     displayTodo();
-    dragElement(todo);   // If you have this function
 });
 
 function loadFromLocalStorage() {
